@@ -31,27 +31,27 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: IconDashboard,
     },
     {
       title: "Blogs",
-      url: "#",
+      url: "/dashboard/blogs",
       icon: IconChartBar,
     },
     {
       title: "Users",
-      url: "#",
+      url: "/dashboard/users",
       icon: IconUsers,
     },
     {
-      title: "Visitors",
-      url: "#",
+      title: "Notes",
+      url: "/dashboard/notes",
       icon: IconBinoculars,
     },
     {
       title: "Projects",
-      url: "#",
+      url: "/dashboard/projects",
       icon: IconFolder,
     },
   ],
@@ -67,7 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <a href="/dashboard">
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">Abhik Dash.</span>
               </a>
