@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatDate } from "@/lib/format";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getNotes } from "@/redux/thunks/note.thunk";
 import { TNoteSchema } from "@/schemas/note.schema";
@@ -60,7 +59,7 @@ const NoteTableBody = ({ notes }: { notes: TNoteSchema[] }) => {
             {note.id.slice(0, 12)}...
             <Copy size={14} onClick={() => handleCopyId(note.id)} />
           </TableCell>
-          <TableCell>{formatDate(note.createdAt)}</TableCell>
+          <TableCell>{note.createdAt}</TableCell>
           <TableCell>
             <Link href={`${note.image}`} target="_blank">
               <Image
