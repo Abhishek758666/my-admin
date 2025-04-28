@@ -1,4 +1,6 @@
-import { toast } from "react-hot-toast";
+import { Check, X } from "lucide-react";
+import { toast } from "sonner";
+
 const config: any = {
   position: "top-center",
   autoClose: 3000,
@@ -7,15 +9,17 @@ const config: any = {
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
-  theme: "light",
 };
 
 export const successToast = (message: string) => {
-  toast.success(message, config);
+  toast.success(message, {
+    ...config,
+    icon: <Check className="text-green-500" />,
+  });
 };
 
 export const errorToast = (message: string) => {
-  toast.error(message, config);
+  toast.error(message, { ...config, icon: <X className="text-red-500" /> });
 };
 
 export const dismissToast = () => {

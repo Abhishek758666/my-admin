@@ -51,7 +51,7 @@ export const doGet = async (
 ) => {
   try {
     const response = await instance.get(url, config);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     handleApiError(error);
     throw error;
@@ -65,7 +65,7 @@ export const doPost = async (
 ) => {
   try {
     const response = await instance.post(url, data, config);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     handleApiError(error);
     throw error;
@@ -93,7 +93,7 @@ export const doPatch = async (
 ) => {
   try {
     const response = await instance.patch(url, data, config);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     handleApiError(error);
     throw error;

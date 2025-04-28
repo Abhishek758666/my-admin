@@ -3,13 +3,20 @@ import { TNoteSchema } from "@/schemas/note.schema";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading } from "../slice/loader.slice";
 
-export const getNotes = createAsyncThunk<TNoteSchema[]>(
+interface getNotesArgs {
+  token: string;
+}
+export const getNotes = createAsyncThunk<TNoteSchema[], getNotesArgs>(
   "get notes",
-  async (_, { dispatch }) => {
+  async ({ token }, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      const response = await doGet("/notes");
-      return response;
+      const response = await doGet("/notes", {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      });
+      return response.data;
     } catch (error) {
       throw error;
     } finally {

@@ -100,12 +100,13 @@ const NoteTableBody = ({ notes }: { notes: TNoteSchema[] }) => {
 
 export default function NotesTable() {
   const dispatch = useAppDispatch();
+
+  const token = useAppSelector((state) => state.auth.token);
   const notes = useAppSelector((state) => state.notes.data);
-  console.log(notes);
 
   useEffect(() => {
-    dispatch(getNotes());
-  }, [dispatch]);
+    dispatch(getNotes({ token }));
+  }, [dispatch, token]);
 
   return (
     <div className="max-h-[80vh] overflow-y-auto">

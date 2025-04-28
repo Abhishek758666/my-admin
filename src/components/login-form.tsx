@@ -1,51 +1,88 @@
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import { Card } from "./ui/card";
+"use client";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { LoginSchema, TLoginSchema } from "@/schemas/auth.schema";
+import { useAppDispatch } from "@/redux/store";
+import { Login } from "@/redux/thunks/auth.thunk";
+import { successToast } from "@/lib/toastify";
+import { useRouter } from "next/navigation";
+
+export function LoginForm() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const form = useForm<TLoginSchema>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(data: TLoginSchema) {
+    console.log("i am called");
+    dispatch(
+      Login({
+        data,
+        callback: () => {
+          successToast("LoggedIn");
+          router.push("/dashboard");
+        },
+      })
+    );
+  }
+
   return (
-    <Card className="@container/card">
-      <form className={cn("flex flex-col gap-6 p-10", className)} {...props}>
-        <div className="flex flex-col items-center gap-2 text-center">
-          <h1 className="text-2xl font-bold">Login to your account</h1>
-          <p className="text-muted-foreground text-sm text-balance">
-            Enter your email below to login to your account
-          </p>
-        </div>
-        <div className="grid gap-6">
-          <div className="grid gap-3">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="eg. aabhik81@gmail.com"
-              required
-            />
-          </div>
-          <div className="grid gap-3">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-            </div>
-            <Input
-              id="password"
-              type="password"
-              required
-              placeholder="eg. ********"
-            />
-          </div>
-          <Link href={"/dashboard"}>
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
-          </Link>
-        </div>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full space-y-6 shadow-xl p-10 rounded-xl border"
+      >
+        <h1 className="text-2xl text-center font-bold">Login</h1>
+        <p>Enter your email below to login as admin</p>
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="eg. demo@gmail.com" {...field} />
+              </FormControl>
+              <FormDescription>Email should be Admin email.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="eg. ******" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
       </form>
-    </Card>
+    </Form>
   );
 }

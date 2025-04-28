@@ -22,18 +22,23 @@ import storage from "redux-persist/lib/storage";
 import notesReducer from "./slice/note.slice";
 import chatReducer from "./slice/chat.slice";
 import loaderReducer from "./slice/loader.slice";
+import authReducer from "./slice/auth.slice";
+import visitorReducer from "./slice/visitor.slice";
 
 const persistConfig = {
   key: PERSIST_KEY,
   version: PERSIST_VERSION,
   storage,
-  whitelist: ["notes", "chat"],
+  whitelist: ["notes", "chat", "auth"],
 };
 
 const rootReducer = combineReducers({
+  auth: authReducer,
+  loader: loaderReducer,
+
   notes: notesReducer,
   chat: chatReducer,
-  loader: loaderReducer,
+  visitors: visitorReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
