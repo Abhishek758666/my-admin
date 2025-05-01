@@ -1,7 +1,9 @@
-import React from "react";
+import BlogDataTable from "./(tables)";
 
-const page = () => {
-  return <div>this is page</div>;
-};
-
-export default page;
+export default async function DemoPage() {
+  return (
+    <div className="container mx-auto px-8">
+      <BlogDataTable />
+    </div>
+  );
+}

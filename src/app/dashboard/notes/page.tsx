@@ -1,10 +1,9 @@
-import NotesTable from "./(table)";
+import NotesDataTable from "./(tables)";
 
 export default function Notes() {
   return (
-    <div className="p-4 overflow-y-auto space-y-4">
-      <h1 className="text-xl font-semibold">Portfolio Notes</h1>
-      <NotesTable />
+    <div className="px-8 overflow-y-auto space-y-4">
+      <NotesDataTable />
     </div>
   );
 }
