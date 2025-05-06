@@ -24,6 +24,7 @@ import chatReducer from "./slice/chat.slice";
 import loaderReducer from "./slice/loader.slice";
 import authReducer from "./slice/auth.slice";
 import visitorReducer from "./slice/visitor.slice";
+import tagReducer from "./slice/tag.slice";
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
 
   notes: notesReducer,
+  tags: tagReducer,
   chat: chatReducer,
   visitors: visitorReducer,
 });

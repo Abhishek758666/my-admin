@@ -7,7 +7,7 @@ export const intlFormat = (val: number, locales?: string) =>
 export const copyToClipboard = (val: string) => {
   if (!navigator.clipboard) return errorToast("Cannot copy!");
   navigator.clipboard.writeText(val);
-  successToast("Coppied!");
+  successToast("Coppied Successfully!");
 };
 
 //!Zod

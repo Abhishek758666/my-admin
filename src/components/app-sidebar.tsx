@@ -7,6 +7,7 @@ import {
   IconDashboard,
   IconFolder,
   IconInnerShadowTop,
+  IconTag,
   IconUsers,
 } from "@tabler/icons-react";
 
@@ -28,6 +29,11 @@ const data = {
       title: "Dashboard",
       url: "/dashboard",
       icon: IconDashboard,
+    },
+    {
+      title: "Tags",
+      url: "/dashboard/tags",
+      icon: IconTag,
     },
     {
       title: "Blogs",

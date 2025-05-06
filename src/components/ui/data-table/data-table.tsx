@@ -107,7 +107,7 @@ export function DataTable<TData, TValue>({
         }
         onCreate={onCreate}
       />
-      <div className="rounded-md border">
+      <div className="rounded-md max-h-[470px] overflow-y-auto border-2">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

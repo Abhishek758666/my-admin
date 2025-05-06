@@ -337,8 +337,8 @@ export default function BlogDataTable() {
   };
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-5">Orders Management</h1>
+    <div className="p-4 space-y-4">
+      <h1 className="text-2xl font-semibold">Orders Management</h1>
 
       <DataTable
         columns={columns}

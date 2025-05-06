@@ -121,7 +121,7 @@
   }
 }
 
-* {
+/* * {
   ::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.8rem !important;
@@ -133,4 +133,4 @@
   ::-webkit-scrollbar-thumb {
     background: var(--sidebar-accent);
   }
-}
+} */

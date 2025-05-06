@@ -35,6 +35,9 @@ export function DataTablePagination<TData>({
           row(s) selected.
         </div>
       )}
+      <div className="flex-1 text-sm text-muted-foreground">
+        Total Data: {table.getCoreRowModel().rows.length}
+      </div>
       {selectedRowsCount === 0 && <div className="flex-1"></div>}
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">

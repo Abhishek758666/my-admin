@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { CircleCheck, CircleX } from "lucide-react";
 
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getNotes } from "@/redux/thunks/note.thunk";
+import { getNotes, toggleNote } from "@/redux/thunks/note.thunk";
 import { TNoteSchema } from "@/schemas/note.schema";
 import Image from "next/image";
 import Link from "next/link";
@@ -75,6 +75,10 @@ export default function NotesDataTable() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [currentNote, setCurrentNote] = useState<TNoteSchema | null>(null);
 
+  const verifyNote = (id: string) => {
+    dispatch(toggleNote({ id, token }));
+  };
+
   // Define base columns
   const baseColumns: ColumnDef<TNoteSchema>[] = [
     {
@@ -119,7 +123,10 @@ export default function NotesDataTable() {
       cell: ({ row }) => {
         const isVerified = row.getValue("verified") as string;
         return (
-          <div className="flex items-center">
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => verifyNote(row.getValue("id"))}
+          >
             {isVerified && (
               <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
                 <CircleCheck className="mr-1 h-3 w-3" />
@@ -167,8 +174,10 @@ export default function NotesDataTable() {
   ];
 
   // Handle delete
-  const handleDelete = () => {
+  const handleDelete = (id: any) => {
+    console.log(id);
     setIsDeleteDialogOpen(true);
+    alert("deleted");
   };
 
   // Handle form submission for create/edit
@@ -180,8 +189,8 @@ export default function NotesDataTable() {
   };
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-5">Notes Management</h1>
+    <div className="p-4 space-y-4">
+      <h1 className="text-2xl font-semibold">Notes Management</h1>
 
       <DataTable
         columns={columns}

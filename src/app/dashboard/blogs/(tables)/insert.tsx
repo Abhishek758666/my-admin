@@ -5,21 +5,24 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-  DialogDescription,
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Order } from ".";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { BlogSchema, TBlogSchema } from "@/schemas/blog.schema";
+import TiptapEditor from "@/components/tiptap-editor";
 
 interface InsertBlogProps {
   isCreateDialogOpen: boolean;
@@ -29,126 +32,102 @@ interface InsertBlogProps {
 }
 
 const InsertBlog = (props: InsertBlogProps) => {
+  const form = useForm<TBlogSchema>({
+    resolver: zodResolver(BlogSchema),
+    defaultValues: {
+      title: "",
+      excerpt: "",
+      heroImage: "",
+      tags: [],
+      description: "",
+    },
+  });
+
   return (
     <div>
       <Dialog
         open={props.isCreateDialogOpen}
         onOpenChange={props.setIsCreateDialogOpen}
       >
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[1200px]">
           <DialogHeader>
-            <DialogTitle>Create New Order</DialogTitle>
-            <DialogDescription>
-              Fill in the details to create a new order.
-            </DialogDescription>
+            <DialogTitle>Create New Blog</DialogTitle>
           </DialogHeader>
-          <form onSubmit={props.handleFormSubmit}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="id" className="text-right">
-                  Order ID
-                </Label>
-                <Input
-                  id="id"
-                  name="id"
-                  defaultValue={`ORD-${String(props.data.length + 1).padStart(
-                    3,
-                    "0"
-                  )}`}
-                  className="col-span-3"
-                  required
+          <Form {...form}>
+            <form
+              onSubmit={props.handleFormSubmit}
+              className="w-full grid grid-cols-[1fr_2fr] gap-6"
+            >
+              <div className="space-y-6 w-full">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Blog Title</FormLabel>
+                      <FormControl>
+                        <Input placeholder="eg. hooks in motion" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="excerpt"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Excerpt</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="eg. Hooks in motion (framer motion) are ...."
+                          type="text"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="tags"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tags</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="eg. Hooks in motion (framer motion) are ...."
+                          type="text"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="customer" className="text-right">
-                  Customer
-                </Label>
-                <Input
-                  id="customer"
-                  name="customer"
-                  className="col-span-3"
-                  required
+              <div className="space-y-6 flex flex-col w-full">
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl>
+                        <TiptapEditor
+                          content={field.value}
+                          onUpdate={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
+                <Button type="submit">Submit</Button>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="status" className="text-right">
-                  Status
-                </Label>
-                <div className="col-span-3">
-                  <Select name="status" defaultValue="pending">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="processing">Processing</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="product" className="text-right">
-                  Product
-                </Label>
-                <Input
-                  id="product"
-                  name="product"
-                  className="col-span-3"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="amount" className="text-right">
-                  Amount
-                </Label>
-                <Input
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  step="0.01"
-                  className="col-span-3"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="paymentMethod" className="text-right">
-                  Payment Method
-                </Label>
-                <div className="col-span-3">
-                  <Select name="paymentMethod" defaultValue="credit_card">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select payment method" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="credit_card">Credit Card</SelectItem>
-                      <SelectItem value="paypal">PayPal</SelectItem>
-                      <SelectItem value="bank_transfer">
-                        Bank Transfer
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="date" className="text-right">
-                  Date
-                </Label>
-                <Input
-                  id="date"
-                  name="date"
-                  type="date"
-                  className="col-span-3"
-                  defaultValue={new Date().toISOString().split("T")[0]}
-                  required
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Create Order</Button>
-            </DialogFooter>
-          </form>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
     </div>

@@ -21,7 +21,7 @@ export const LoadingSpinner = ({ className }: { className?: string }) => {
 
 export default function Loader() {
   return (
-    <div className="bg-[#00000089] flex justify-center items-center w-full h-screen fixed top-0 left-0 z-50">
+    <div className="bg-[#00000089] flex justify-center items-center w-full h-screen fixed top-0 left-0 z-[99999999999]">
       <LoadingSpinner />
     </div>
   );

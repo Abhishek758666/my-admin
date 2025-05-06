@@ -27,18 +27,27 @@ export const getNotes = createAsyncThunk<TNoteSchema[], getNotesArgs>(
 
 interface verifyNoteArgs {
   id: string;
-  callback?: () => void;
+  token: string;
 }
-export const verifyNotes = createAsyncThunk<any, verifyNoteArgs>(
+export const toggleNote = createAsyncThunk<string, verifyNoteArgs>(
   "add notes",
-  async ({ id, callback }) => {
+  async ({ id, token }, { dispatch }) => {
+    dispatch(setLoading(true));
     try {
-      const response = await doPatch(`/notes/${id}`);
-
-      callback?.();
-      return response;
+      await doPatch(
+        `/notes/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
+        }
+      );
+      return id;
     } catch (error) {
       throw error;
+    } finally {
+      dispatch(setLoading(false));
     }
   }
 );

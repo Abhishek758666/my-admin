@@ -20,7 +20,6 @@ export const Login = createAsyncThunk<TLoginResponseSchema, LoginArgs>(
       const response = await doPost("/login", data);
 
       callback?.();
-      console.log(response);
       return response;
     } catch (error) {
       throw error;
