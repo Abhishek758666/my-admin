@@ -9,9 +9,7 @@ export const getTags = createAsyncThunk<TTagResponseSchema[]>(
     try {
       dispatch(setLoading(true));
       const response = await doGet("/tags", {
-        headers: {
-          credentials: "include",
-        },
+        withCredentials: true,
       });
       return response.data;
     } catch (error) {
@@ -31,9 +29,7 @@ export const addTag = createAsyncThunk<TTagResponseSchema, addTagArgs>(
     try {
       dispatch(setLoading(true));
       const response = await doPost("/tags", tag, {
-        headers: {
-          credentials: "include",
-        },
+        withCredentials: true,
       });
       return response.data;
     } catch (error) {
@@ -54,9 +50,7 @@ export const editTag = createAsyncThunk<TTagResponseSchema, editTagArgs>(
     try {
       dispatch(setLoading(true));
       const response = await doPatch(`/tags/${tagId}`, updatedTag, {
-        headers: {
-          credentials: "include",
-        },
+        withCredentials: true,
       });
       return response.tag;
     } catch (error) {
@@ -76,9 +70,7 @@ export const deleteTag = createAsyncThunk<string, deleteTagArgs>(
     try {
       dispatch(setLoading(true));
       await doDelete(`/tags/${tagId}`, {
-        headers: {
-          credentials: "include",
-        },
+        withCredentials: true,
       });
       return tagId;
     } catch (error) {
