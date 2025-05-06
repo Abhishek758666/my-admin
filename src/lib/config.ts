@@ -1,6 +1,8 @@
 const API_BASE_URL =
   "https://portfolio-backend-production-439e.up.railway.app/api/v1";
 const API_BASE_URL_IMAGE = `https://portfolio-backend-production-439e.up.railway.app/uploads`;
+// const API_BASE_URL = "http://localhost:4000/api/v1/";
+// const API_BASE_URL_IMAGE = `http://localhost:4000/uploads`;
 
 const PERSIST_VERSION = 1;
 const PERSIST_KEY = "abhishek-portfolio";

@@ -3,17 +3,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading } from "../slice/loader.slice";
 import { TTagResponseSchema } from "@/schemas/tag.schema";
 
-interface getTagsArgs {
-  token: string;
-}
-export const getTags = createAsyncThunk<TTagResponseSchema[], getTagsArgs>(
+export const getTags = createAsyncThunk<TTagResponseSchema[]>(
   "get tags",
-  async ({ token }, { dispatch }) => {
+  async (_, { dispatch }) => {
     try {
       dispatch(setLoading(true));
       const response = await doGet("/tags", {
         headers: {
-          Authorization: `bearer ${token}`,
+          credentials: "include",
         },
       });
       return response.data;
@@ -26,17 +23,16 @@ export const getTags = createAsyncThunk<TTagResponseSchema[], getTagsArgs>(
 );
 
 interface addTagArgs {
-  token: string;
   tag: { title: string };
 }
 export const addTag = createAsyncThunk<TTagResponseSchema, addTagArgs>(
   "add tag",
-  async ({ token, tag }, { dispatch }) => {
+  async ({ tag }, { dispatch }) => {
     try {
       dispatch(setLoading(true));
       const response = await doPost("/tags", tag, {
         headers: {
-          Authorization: `bearer ${token}`,
+          credentials: "include",
         },
       });
       return response.data;
@@ -49,18 +45,17 @@ export const addTag = createAsyncThunk<TTagResponseSchema, addTagArgs>(
 );
 
 interface editTagArgs {
-  token: string;
   tagId: string;
   updatedTag: { title: string };
 }
 export const editTag = createAsyncThunk<TTagResponseSchema, editTagArgs>(
   "edit tag",
-  async ({ token, tagId, updatedTag }, { dispatch }) => {
+  async ({ tagId, updatedTag }, { dispatch }) => {
     try {
       dispatch(setLoading(true));
       const response = await doPatch(`/tags/${tagId}`, updatedTag, {
         headers: {
-          Authorization: `bearer ${token}`,
+          credentials: "include",
         },
       });
       return response.tag;
@@ -73,17 +68,16 @@ export const editTag = createAsyncThunk<TTagResponseSchema, editTagArgs>(
 );
 
 interface deleteTagArgs {
-  token: string;
   tagId: string;
 }
 export const deleteTag = createAsyncThunk<string, deleteTagArgs>(
   "delete tag",
-  async ({ token, tagId }, { dispatch }) => {
+  async ({ tagId }, { dispatch }) => {
     try {
       dispatch(setLoading(true));
       await doDelete(`/tags/${tagId}`, {
         headers: {
-          Authorization: `bearer ${token}`,
+          credentials: "include",
         },
       });
       return tagId;

@@ -61,7 +61,6 @@ const DeleteDialog = (props: DeleteDialogProps) => {
 export default function TagDataTable() {
   const dispatch = useAppDispatch();
 
-  const token = useAppSelector((state) => state.auth.token);
   const tags = useAppSelector((state) => state.tags.data);
 
   const [data] = useState<TTagResponseSchema[]>([]);
@@ -150,29 +149,27 @@ export default function TagDataTable() {
       dispatch(
         editTag({
           updatedTag: { title: newTag.title },
-          token,
           tagId: currentTag.id,
         })
       );
       setIsEditDialogOpen(false);
     } else {
       // Create new order
-      dispatch(addTag({ tag: { title: newTag.title }, token }));
+      dispatch(addTag({ tag: { title: newTag.title } }));
       setIsCreateDialogOpen(false);
-      dispatch(getTags({ token }));
     }
   };
 
   // Handle confirm delete
   const handleConfirmDelete = () => {
-    dispatch(deleteTag({ tagId: currentTag?.id ?? "", token }));
+    dispatch(deleteTag({ tagId: currentTag?.id ?? "" }));
     setIsDeleteDialogOpen(false);
     setCurrentTag(null);
   };
 
   useEffect(() => {
-    dispatch(getTags({ token }));
-  }, [dispatch, token]);
+    dispatch(getTags());
+  }, [dispatch]);
 
   return (
     <div className="p-4 space-y-4">
