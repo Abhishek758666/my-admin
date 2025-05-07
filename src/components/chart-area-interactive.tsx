@@ -51,6 +51,12 @@ export function ChartAreaInteractive() {
     if (isMobile) {
       setTimeRange("7d");
     }
+    fetch(
+      "https://portfolio-backend-production-439e.up.railway.app/api/v1/notes",
+      {
+        credentials: "include",
+      }
+    );
   }, [isMobile, token, dispatch]);
 
   const filteredData = chartData?.filter((item) => {

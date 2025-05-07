@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Login } from "../thunks/auth.thunk";
+import { Login, Logout } from "../thunks/auth.thunk";
 
 interface authState {
   username: string;
@@ -50,6 +50,24 @@ export const authSlice = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(Login.rejected, (state) => {
+        state.loading = false;
+        state.error = "Unable to Login, Try again later";
+      });
+    builder
+      .addCase(Logout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(Logout.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+        state.username = "";
+        state.userImage = "";
+        state.email = "";
+        state.token = "";
+        state.isLoggedIn = false;
+      })
+      .addCase(Logout.rejected, (state) => {
         state.loading = false;
         state.error = "Unable to Login, Try again later";
       });

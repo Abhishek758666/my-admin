@@ -8,9 +8,7 @@ export const getTags = createAsyncThunk<TTagResponseSchema[]>(
   async (_, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      const response = await doGet("/tags", {
-        withCredentials: true,
-      });
+      const response = await doGet("/tags");
       return response.data;
     } catch (error) {
       throw error;
@@ -28,9 +26,7 @@ export const addTag = createAsyncThunk<TTagResponseSchema, addTagArgs>(
   async ({ tag }, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      const response = await doPost("/tags", tag, {
-        withCredentials: true,
-      });
+      const response = await doPost("/tags", tag);
       return response.data;
     } catch (error) {
       throw error;
@@ -49,9 +45,7 @@ export const editTag = createAsyncThunk<TTagResponseSchema, editTagArgs>(
   async ({ tagId, updatedTag }, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      const response = await doPatch(`/tags/${tagId}`, updatedTag, {
-        withCredentials: true,
-      });
+      const response = await doPatch(`/tags/${tagId}`, updatedTag);
       return response.tag;
     } catch (error) {
       throw error;
@@ -69,9 +63,7 @@ export const deleteTag = createAsyncThunk<string, deleteTagArgs>(
   async ({ tagId }, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      await doDelete(`/tags/${tagId}`, {
-        withCredentials: true,
-      });
+      await doDelete(`/tags/${tagId}`);
       return tagId;
     } catch (error) {
       throw error;

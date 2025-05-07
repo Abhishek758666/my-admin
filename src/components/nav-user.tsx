@@ -6,9 +6,9 @@ import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
 import { LogOutIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { logOut } from "@/redux/slice/auth.slice";
 import { useRouter } from "next/navigation";
 import { successToast } from "@/lib/toastify";
+import { Logout } from "@/redux/thunks/auth.thunk";
 
 export function NavUser() {
   const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ export function NavUser() {
   const authState = useAppSelector((state) => state.auth);
 
   const handleLogout = () => {
-    dispatch(logOut());
+    dispatch(Logout());
     router.push("/");
     successToast("logged out successfully");
   };

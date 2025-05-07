@@ -28,3 +28,18 @@ export const Login = createAsyncThunk<TLoginResponseSchema, LoginArgs>(
     }
   }
 );
+
+export const Logout = createAsyncThunk<TLoginResponseSchema>(
+  "logout",
+  async (_, { dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+      const response = await doPost("/logout");
+      return response;
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }
+);

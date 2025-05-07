@@ -28,10 +28,10 @@ export const handleApiError = (error: any) => {
 
 const instance = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
-    credentials: true,
   },
   timeout: 50000,
 });
