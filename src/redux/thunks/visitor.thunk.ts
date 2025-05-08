@@ -3,19 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading } from "../slice/loader.slice";
 import { TVisitorSchema } from "@/schemas/visitor.schema";
 
-interface GetVisitorsArgs {
-  token: string;
-}
-export const getVisitors = createAsyncThunk<TVisitorSchema[], GetVisitorsArgs>(
+export const getVisitors = createAsyncThunk<TVisitorSchema[]>(
   "get/visitor",
-  async ({ token }, { dispatch }) => {
+  async (_, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      const response = await doGet("/visitor", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await doGet("/visitor");
       return response;
     } catch (error) {
       throw error;

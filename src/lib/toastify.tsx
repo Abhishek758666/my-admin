@@ -9,6 +9,7 @@ const config: any = {
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
+  theme: "dark",
 };
 
 export const successToast = (message: string) => {

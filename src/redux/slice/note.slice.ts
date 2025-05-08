@@ -1,6 +1,6 @@
 import { TNoteSchema } from "@/schemas/note.schema";
 import { createSlice } from "@reduxjs/toolkit";
-import { getNotes, toggleNote } from "../thunks/note.thunk";
+import { deleteNote, getNotes, toggleNote } from "../thunks/note.thunk";
 import { successToast } from "@/lib/toastify";
 
 interface noteState {
@@ -60,6 +60,24 @@ export const noteSlice = createSlice({
         state.error = null;
       })
       .addCase(toggleNote.rejected, (state) => {
+        state.loading = false;
+        state.error = "Unable to update notes, Try again later";
+      });
+
+    builder
+      .addCase(deleteNote.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        state.loading = false;
+        if (state.data) {
+          state.data = state.data.filter((note) => note.id != action.payload);
+          successToast("Note Verified successfully");
+        }
+        state.error = null;
+      })
+      .addCase(deleteNote.rejected, (state) => {
         state.loading = false;
         state.error = "Unable to update notes, Try again later";
       });

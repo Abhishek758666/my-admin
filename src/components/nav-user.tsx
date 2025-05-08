@@ -26,7 +26,10 @@ export function NavUser() {
       <SidebarMenuItem>
         <div className="flex justify-center gap-5">
           <Avatar className="h-8 w-8 rounded-full grayscale">
-            <AvatarImage src={authState.userImage} alt={authState.username} />
+            <AvatarImage
+              src={authState.userImage === "" ? undefined : authState.userImage}
+              alt={authState.username}
+            />
             <AvatarFallback className="rounded-lg">CN</AvatarFallback>
           </Avatar>
           <div className="grid flex-1 text-left text-sm leading-tight">

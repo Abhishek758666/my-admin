@@ -22,6 +22,7 @@ import { addTag, deleteTag, editTag, getTags } from "@/redux/thunks/tag.thunk";
 import InsertTag from "./insert";
 import EditTag from "./edit";
 import { copyToClipboard } from "@/utils/helpers";
+import { Copy } from "lucide-react";
 
 interface DeleteDialogProps {
   isDeleteDialogOpen: boolean;
@@ -76,10 +77,11 @@ export default function TagDataTable() {
       header: "Tag ID",
       cell: ({ row }) => (
         <span
-          className="font-medium hover:underline cursor-pointer"
+          className="font-medium hover:underline cursor-pointer flex items-center"
           onClick={() => copyToClipboard(row.getValue("id"))}
         >
           {(row.getValue("id") as string).slice(0, 13)}...
+          <Copy size={18} />
         </span>
       ),
       enableSorting: true,

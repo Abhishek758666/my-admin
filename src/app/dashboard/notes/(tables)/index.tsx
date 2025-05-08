@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { CircleCheck, CircleX } from "lucide-react";
 
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getNotes, toggleNote } from "@/redux/thunks/note.thunk";
+import { deleteNote, getNotes, toggleNote } from "@/redux/thunks/note.thunk";
 import { TNoteSchema } from "@/schemas/note.schema";
 import Image from "next/image";
 import Link from "next/link";
@@ -65,18 +65,17 @@ const DeleteDialog = (props: DeleteDialogProps) => {
 export default function NotesDataTable() {
   const dispatch = useAppDispatch();
 
-  const token = useAppSelector((state) => state.auth.token);
   const data = useAppSelector((state) => state.notes.data);
 
   useEffect(() => {
-    dispatch(getNotes({ token }));
-  }, [dispatch, token]);
+    dispatch(getNotes());
+  }, [dispatch]);
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [currentNote, setCurrentNote] = useState<TNoteSchema | null>(null);
 
   const verifyNote = (id: string) => {
-    dispatch(toggleNote({ id, token }));
+    dispatch(toggleNote({ id }));
   };
 
   // Define base columns
@@ -174,16 +173,15 @@ export default function NotesDataTable() {
   ];
 
   // Handle delete
-  const handleDelete = (id: any) => {
-    console.log(id);
+  const handleDelete = () => {
     setIsDeleteDialogOpen(true);
-    alert("deleted");
   };
 
   // Handle form submission for create/edit
 
   // Handle confirm delete
   const handleConfirmDelete = () => {
+    dispatch(deleteNote({ id: currentNote?.id ?? "" }));
     setIsDeleteDialogOpen(false);
     setCurrentNote(null);
   };

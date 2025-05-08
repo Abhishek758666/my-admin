@@ -19,6 +19,7 @@ import { useAppDispatch } from "@/redux/store";
 import { Login } from "@/redux/thunks/auth.thunk";
 import { successToast } from "@/lib/toastify";
 import { useRouter } from "next/navigation";
+import { PasswordInput } from "./ui/password-input";
 
 export function LoginForm() {
   const router = useRouter();
@@ -75,7 +76,7 @@ export function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="eg. ******" type="password" {...field} />
+                <PasswordInput placeholder="eg. ******" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

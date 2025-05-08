@@ -1,21 +1,14 @@
-import { doGet, doPatch } from "@/lib/axios";
+import { doDelete, doGet, doPatch } from "@/lib/axios";
 import { TNoteSchema } from "@/schemas/note.schema";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading } from "../slice/loader.slice";
 
-interface getNotesArgs {
-  token: string;
-}
-export const getNotes = createAsyncThunk<TNoteSchema[], getNotesArgs>(
+export const getNotes = createAsyncThunk<TNoteSchema[]>(
   "get notes",
-  async ({ token }, { dispatch }) => {
+  async (_, { dispatch }) => {
     try {
       dispatch(setLoading(true));
-      const response = await doGet("/notes", {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      });
+      const response = await doGet("/notes");
       return response.data;
     } catch (error) {
       throw error;
@@ -27,22 +20,28 @@ export const getNotes = createAsyncThunk<TNoteSchema[], getNotesArgs>(
 
 interface verifyNoteArgs {
   id: string;
-  token: string;
 }
 export const toggleNote = createAsyncThunk<string, verifyNoteArgs>(
-  "add notes",
-  async ({ id, token }, { dispatch }) => {
+  "toggle notes",
+  async ({ id }, { dispatch }) => {
     dispatch(setLoading(true));
     try {
-      await doPatch(
-        `/notes/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
-        }
-      );
+      await doPatch(`/notes/${id}`);
+      return id;
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }
+);
+
+export const deleteNote = createAsyncThunk<string, verifyNoteArgs>(
+  "delete notes",
+  async ({ id }, { dispatch }) => {
+    dispatch(setLoading(true));
+    try {
+      await doDelete(`/notes/${id}`);
       return id;
     } catch (error) {
       throw error;

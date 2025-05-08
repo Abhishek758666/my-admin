@@ -43,21 +43,14 @@ export function ChartAreaInteractive() {
   const isMobile = useIsMobile();
   const [timeRange, setTimeRange] = React.useState("90d");
 
-  const token = useAppSelector((state) => state.auth.token);
   const chartData = useAppSelector((state) => state.visitors.data);
 
   React.useEffect(() => {
-    dispatch(getVisitors({ token: token }));
+    dispatch(getVisitors());
     if (isMobile) {
       setTimeRange("7d");
     }
-    fetch(
-      "https://portfolio-backend-production-439e.up.railway.app/api/v1/notes",
-      {
-        credentials: "include",
-      }
-    );
-  }, [isMobile, token, dispatch]);
+  }, [isMobile, dispatch]);
 
   const filteredData = chartData?.filter((item) => {
     const date = new Date(item.date);
