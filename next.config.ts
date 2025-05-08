@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:4000/api/v1*",
+        destination:
+          "https://portfolio-backend-production-439e.up.railway.app/api/v1*",
       },
     ];
   },

@@ -34,7 +34,6 @@ export function LoginForm() {
   });
 
   function onSubmit(data: TLoginSchema) {
-    console.log("i am called");
     dispatch(
       Login({
         data,

@@ -52,7 +52,6 @@ export const noteSlice = createSlice({
               ...state.data[index],
               verified: !state.data[index].verified,
             };
-            console.log(updatedData);
             state.data[index] = updatedData;
           }
           successToast("Note Verified successfully");
