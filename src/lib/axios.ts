@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { API_BASE_URL } from "./config";
 import { errorToast } from "./toastify";
+import store from "@/redux/store";
+import { Logout } from "@/redux/thunks/auth.thunk";
 
 export const handleApiError = (error: any) => {
   if (axios.isCancel(error)) return;
@@ -24,6 +26,11 @@ export const handleApiError = (error: any) => {
   } else {
     errorToast("Network Error");
   }
+  if (error.response?.status === 401 || error.response?.status === 403) {
+    store.dispatch(Logout());
+    return;
+  }
+  throw error;
 };
 
 const instance = axios.create({
